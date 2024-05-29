@@ -8,17 +8,26 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
-  company: string;
+  @Column({ default: '' })
+  cpf: string;
 
   @Column()
   email: string;
 
   @Column()
-  username: string;
-
-  @Column()
   password: string;
+
+  @Column({ default: '' })
+  cep: string;
+
+  @Column({ default: '' })
+  adress: string;
+
+  @Column({ default: '' })
+  city: string;
+
+  @Column({ default: '' })
+  state: string;
 
   @Column({ default: true })
   isActive?: boolean;

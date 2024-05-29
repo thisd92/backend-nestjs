@@ -1,35 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import * as argon2 from 'argon2';
+import { UserService } from 'src/user/user.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  async hashPassword(password: string): Promise<string> {
-    return await argon2.hash(password);
-  }
+  constructor(
+    private readonly userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
-  async comparePasswords(password: string, hash: string): Promise<boolean> {
+  async verifyPassword(password: string, hash: string): Promise<boolean> {
     return await argon2.verify(hash, password);
   }
 
-  auth(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+  async auth(createAuthDto: CreateAuthDto): Promise<{ acess_token: string }> {
+    const user = await this.userService.findByEmail(createAuthDto.email);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const passMatched = await this.verifyPassword(
+      createAuthDto.password,
+      user.password,
+    );
+    if (!passMatched) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    const payload = {
+      id: user.id,
+      email: user.email,
+    };
+    return {
+      acess_token: await this.jwtService.signAsync(payload),
+    };
   }
 }

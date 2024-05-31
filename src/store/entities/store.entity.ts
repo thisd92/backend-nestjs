@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('stores')
 export class Store {
@@ -16,7 +22,7 @@ export class Store {
 
   @Column()
   adress: string;
-  
+
   @Column()
   adressNumber: number;
 
@@ -31,4 +37,25 @@ export class Store {
 
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  description: string;
+
+  @Column({ nullable: true })
+  logoUrl: string;
+
+  @Column({ nullable: true })
+  website: string;
+
+  @Column({ default: true })
+  status: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

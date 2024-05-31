@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsEmail, IsString, MinLength } from "class-validator";
 
 export class CreateStoreDto {
   @IsString()
@@ -14,8 +14,18 @@ export class CreateStoreDto {
   adress: string;
 
   @IsString()
-  City: string;
+  adressNumber: number;
 
   @IsString()
-  State: string;
+  city: string;
+
+  @IsString()
+  state: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  @MinLength(6)
+  password: string;
 }

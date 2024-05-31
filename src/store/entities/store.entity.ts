@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity('stores')
 export class Store {
   @PrimaryGeneratedColumn()
   id: number;
@@ -11,15 +12,23 @@ export class Store {
   cnpj: string;
 
   @Column()
-  cep: string
-  
-  @Column()
-  adress: string
-  
-  @Column()
-  City: string
-  
-  @Column()
-  State: string
+  cep: string;
 
+  @Column()
+  adress: string;
+  
+  @Column()
+  adressNumber: number;
+
+  @Column()
+  city: string;
+
+  @Column()
+  state: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
 }

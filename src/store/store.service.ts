@@ -1,26 +1,66 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
+import { Store } from './entities/store.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class StoreService {
-  create(createStoreDto: CreateStoreDto) {
-    return 'This action adds a new store';
+  constructor(
+    @InjectRepository(Store)
+    private readonly storeRepository: Repository<Store>,
+  ) {}
+  async create(createStoreDto: CreateStoreDto): Promise<Store> {
+    const hashedPassword = await argon2.hash(createStoreDto.password);
+    const store = this.storeRepository.create({
+      ...createStoreDto,
+      password: hashedPassword,
+    });
+    return this.storeRepository.save(store);
   }
 
-  findAll() {
-    return `This action returns all store`;
+  async findAll(): Promise<Store[]> {
+    return this.storeRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} store`;
+  async findOne(id: number): Promise<Store> {
+    const store = await this.storeRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (!store) {
+      throw new NotFoundException('Store not found');
+    }
+    return store;
   }
 
-  update(id: number, updateStoreDto: UpdateStoreDto) {
-    return `This action updates a #${id} store`;
+  async findByEmail(email: string): Promise<Store> {
+    const store = await this.storeRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (!store) {
+      throw new NotFoundException('Store not found');
+    }
+    return store;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} store`;
+  async update(id: number, updateStoreDto: UpdateStoreDto) {
+    await this.storeRepository.update(id, updateStoreDto);
+    const updatedStore = await this.storeRepository.findOne({
+      where: { id: id },
+    });
+    return updatedStore;
+  }
+
+  async remove(id: number): Promise<void> {
+    const result = await this.storeRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException('Store not found');
+    }
   }
 }

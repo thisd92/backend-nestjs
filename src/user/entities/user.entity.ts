@@ -22,6 +22,9 @@ export class User {
 
   @Column({ default: '' })
   adress: string;
+  
+  @Column({ default: '' })
+  adressNumber: string;
 
   @Column({ default: '' })
   city: string;

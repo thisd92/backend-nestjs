@@ -6,6 +6,9 @@ import { DatabaseModule } from './database.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { StoreModule } from './store/store.module';
+import { ProductModule } from './product/product.module';
+import { FileService } from './file/file.service';
+import { MulterModule } from '@nestjs/platform-express';
 
 
 @Module({
@@ -14,12 +17,16 @@ import { StoreModule } from './store/store.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    MulterModule.register({
+      dest: './uploads'
+    }),
     DatabaseModule,
     UserModule,
     AuthModule,
     StoreModule,
+    ProductModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FileService],
 })
 export class AppModule {}

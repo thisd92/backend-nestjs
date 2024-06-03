@@ -1,7 +1,9 @@
+import { Product } from 'src/product/entities/product.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,17 +16,17 @@ export class Store {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   cnpj: string;
 
   @Column()
   cep: string;
 
   @Column()
-  adress: string;
+  address: string;
 
   @Column()
-  adressNumber: number;
+  addressNumber: number;
 
   @Column()
   city: string;
@@ -32,7 +34,7 @@ export class Store {
   @Column()
   state: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -51,7 +53,10 @@ export class Store {
   website: string;
 
   @Column({ default: true })
-  status: boolean;
+  isActive: boolean;
+
+  @OneToMany(() => Product, (product) => product.store)
+  products: Product[];
 
   @CreateDateColumn()
   createdAt: Date;

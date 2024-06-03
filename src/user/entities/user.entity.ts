@@ -21,10 +21,10 @@ export class User {
   cep: string;
 
   @Column({ default: '' })
-  adress: string;
+  address: string;
   
   @Column({ default: '' })
-  adressNumber: string;
+  addressNumber: string;
 
   @Column({ default: '' })
   city: string;

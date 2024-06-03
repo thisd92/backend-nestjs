@@ -22,7 +22,7 @@ export class StoreService {
   }
 
   async findAll(): Promise<Store[]> {
-    return this.storeRepository.find();
+    return this.storeRepository.find({ relations: ['products'] });
   }
 
   async findOne(id: number): Promise<Store> {
@@ -30,6 +30,7 @@ export class StoreService {
       where: {
         id: id,
       },
+      relations: ['products'],
     });
     if (!store) {
       throw new NotFoundException('Store not found');

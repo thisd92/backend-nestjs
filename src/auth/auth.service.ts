@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { AuthDto } from './dto/auth.dto';
 import * as argon2 from 'argon2';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
@@ -18,14 +18,14 @@ export class AuthService {
   }
 
   async userAuth(
-    createAuthDto: CreateAuthDto,
+    authDto: AuthDto,
   ): Promise<{ acess_token: string }> {
-    const user = await this.userService.findByEmail(createAuthDto.email);
+    const user = await this.userService.findByEmail(authDto.email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
     const passMatched = await this.verifyPassword(
-      createAuthDto.password,
+      authDto.password,
       user.password,
     );
     if (!passMatched) {
@@ -42,14 +42,14 @@ export class AuthService {
   }
 
   async storeAuth(
-    createAuthDto: CreateAuthDto,
+    authDto: AuthDto,
   ): Promise<{ acess_token: string }> {
-    const store = await this.storeService.findByEmail(createAuthDto.email);
+    const store = await this.storeService.findByEmail(authDto.email);
     if (!store) {
       throw new UnauthorizedException('Invalid credentials');
     }
     const passMatched = await this.verifyPassword(
-      createAuthDto.password,
+      authDto.password,
       store.password,
     );
     if (!passMatched) {

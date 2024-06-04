@@ -1,14 +1,14 @@
 import { Controller, Post, Body, UnauthorizedException, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { AuthDto } from './dto/auth.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('user/login')
-  async userAuth(@Body(new ValidationPipe()) createAuthDto: CreateAuthDto) {
-    const result = await this.authService.userAuth(createAuthDto);
+  async userAuth(@Body(new ValidationPipe()) authDto: AuthDto) {
+    const result = await this.authService.userAuth(authDto);
     if (!result) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -16,8 +16,8 @@ export class AuthController {
   }
 
   @Post('store/login')
-  async storeAuth(@Body(new ValidationPipe()) createAuthDto: CreateAuthDto) {
-    const result = await this.authService.storeAuth(createAuthDto);
+  async storeAuth(@Body(new ValidationPipe()) authDto: AuthDto) {
+    const result = await this.authService.storeAuth(authDto);
     if (!result) {
       throw new UnauthorizedException('Invalid credentials');
     }

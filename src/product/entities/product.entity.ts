@@ -1,9 +1,11 @@
+import { OrderItem } from 'src/order-items/entities/order-item.entity';
 import { Store } from 'src/store/entities/store.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -47,4 +49,7 @@ export class Product {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToMany(() => OrderItem, (orderIem) => orderIem.product)
+  orderItems: OrderItem[];
 }

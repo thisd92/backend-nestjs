@@ -1,3 +1,4 @@
+import { Order } from 'src/order/entities/order.entity';
 import { Product } from 'src/product/entities/product.entity';
 import {
   Column,
@@ -57,6 +58,9 @@ export class Store {
 
   @OneToMany(() => Product, (product) => product.store)
   products: Product[];
+
+  @OneToMany(() => Order, (order) => order.store)
+  orders: Order[];
 
   @CreateDateColumn()
   createdAt: Date;

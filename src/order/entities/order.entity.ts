@@ -8,6 +8,8 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { OrderStatusHistory } from './order-status.entity';
+import { UserAddress } from 'src/user/entities/user-address.entity';
 
 @Entity('orders')
 export class Order {
@@ -26,9 +28,18 @@ export class Order {
   })
   items: OrderItem[];
 
+  @ManyToOne(() => UserAddress, { nullable: true })
+  shippingAddress: UserAddress;
+
+  @ManyToOne(() => PaymentMethod, { nullable: true })
+  paymentMethod: PaymentMethod;
+
   @Column('decimal')
   total: number;
 
   @Column()
   status: string;
+
+  @OneToMany(() => OrderStatusHistory, (history) => history.order)
+  statusHistory: OrderStatusHistory[];
 }

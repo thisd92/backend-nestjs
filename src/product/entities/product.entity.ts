@@ -7,9 +7,11 @@ import {
   JoinColumn,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ProductReview } from './product-review.entity';
 
 @Entity('products')
 export class Product {
@@ -25,7 +27,7 @@ export class Product {
   @Column('decimal')
   price: number;
 
-  @Column()
+  @Column('int')
   stock: number;
 
   @Column('simple-array', { nullable: true })
@@ -40,16 +42,28 @@ export class Product {
   @Column({ default: true })
   isSellable: boolean;
 
+  @Column({ unique: true })
+  sku: string;
+
+  @Column('decimal', { nullable: true })
+  discountPrice: number;
+
+  @Column('int', { nullable: true })
+  discountPercentage: number;
+
   @ManyToOne(() => Store, (store) => store.products)
   @JoinColumn({ name: 'storeId' })
   store: Store;
+
+  @OneToMany(() => ProductReview, (review) => review.product)
+  reviews: ProductReview[];
+
+  @ManyToMany(() => OrderItem, (orderIem) => orderIem.product)
+  orderItems: OrderItem[];
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @ManyToMany(() => OrderItem, (orderIem) => orderIem.product)
-  orderItems: OrderItem[];
 }

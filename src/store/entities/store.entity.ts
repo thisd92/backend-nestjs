@@ -62,6 +62,12 @@ export class Store {
   @OneToMany(() => Order, (order) => order.store)
   orders: Order[];
 
+  @Column({ type: 'float', nullable: true })
+  rating: number;
+
+  @Column({ type: 'int', nullable: true })
+  ratingCount: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

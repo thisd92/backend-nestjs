@@ -7,6 +7,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserAddress } from './user-address.entity';
+import { ProductReview } from 'src/product/entities/product-review.entity';
 
 @Entity('users')
 export class User {
@@ -46,8 +48,20 @@ export class User {
   @Column({ default: false })
   admin?: boolean;
 
+  @Column({ type: 'simple-array', nullable: true })
+  roles: string[];
+
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
+
+  @OneToMany(() => UserAddress, (address) => address.user)
+  addresses: UserAddress[];
+
+  @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.user)
+  paymentMethods: PaymentMethod[];
+
+  @OneToMany(() => ProductReview, (review) => review.user)
+  reviews: ProductReview[];
 
   @CreateDateColumn()
   createdAt: Date;

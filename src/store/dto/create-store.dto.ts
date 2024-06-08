@@ -2,6 +2,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   MinLength,
 } from 'class-validator';
@@ -44,4 +45,20 @@ export class CreateStoreDto {
   @MinLength(6)
   @IsNotEmpty()
   password: string;
+
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @IsString()
+  @IsOptional()
+  logoUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  website?: string;
 }

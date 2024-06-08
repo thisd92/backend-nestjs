@@ -6,7 +6,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { CreateOrderItemDto } from 'src/order-items/dto/create-order-item.dto';
-import { OrderItem } from 'src/order-items/entities/order-item.entity';
 
 export class CreateOrderDto {
   @IsNumber()

@@ -1,5 +1,6 @@
 import {
   IsArray,
+  IsBoolean,
   IsNotEmpty,
   IsNumber,
   IsObject,
@@ -35,6 +36,10 @@ export class CreateProductDto {
   @IsObject()
   @IsOptional()
   attributes?: Record<string, any>;
+
+  @IsBoolean()
+  @IsOptional()
+  isSellable?: boolean;
 
   @IsNumber()
   @IsNotEmpty()

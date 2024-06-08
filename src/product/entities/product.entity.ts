@@ -42,7 +42,7 @@ export class Product {
   @Column({ default: true })
   isSellable: boolean;
 
-  @Column({ unique: true })
+  @Column({ default: ''})
   sku: string;
 
   @Column('decimal', { nullable: true })

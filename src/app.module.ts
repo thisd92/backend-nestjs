@@ -11,6 +11,7 @@ import { FileService } from './file/file.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { OrderModule } from './order/order.module';
 import { OrderItemsModule } from './order-items/order-items.module';
+import { PaymentMethodsModule } from './payment-methods/payment-methods.module';
 
 
 @Module({
@@ -29,6 +30,7 @@ import { OrderItemsModule } from './order-items/order-items.module';
     ProductModule,
     OrderModule,
     OrderItemsModule,
+    PaymentMethodsModule,
   ],
   controllers: [AppController],
   providers: [AppService, FileService],

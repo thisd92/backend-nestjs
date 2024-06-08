@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { OrderStatusHistory } from './order-status.entity';
 import { UserAddress } from 'src/user/entities/user-address.entity';
+import { PaymentMethod } from 'src/payment-methods/entities/payment-method.entity';
 
 @Entity('orders')
 export class Order {

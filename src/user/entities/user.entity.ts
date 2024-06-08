@@ -1,5 +1,12 @@
 import { Order } from 'src/order/entities/order.entity';
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -9,10 +16,10 @@ export class User {
   @Column()
   name: string;
 
-  @Column({ default: '' })
+  @Column({ default: '', unique: true })
   cpf: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()

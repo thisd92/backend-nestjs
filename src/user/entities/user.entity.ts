@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { UserAddress } from './user-address.entity';
 import { ProductReview } from 'src/product/entities/product-review.entity';
+import { PaymentMethod } from 'src/payment-methods/entities/payment-method.entity';
 
 @Entity('users')
 export class User {

@@ -9,11 +9,12 @@ import { Product } from 'src/product/entities/product.entity';
 import { Store } from 'src/store/entities/store.entity';
 import { User } from 'src/user/entities/user.entity';
 import { OrderItem } from 'src/order-items/entities/order-item.entity';
+import { OrderStatusHistory } from './entities/order-status.entity';
 
 @Module({
   imports: [
     DatabaseModule,
-    TypeOrmModule.forFeature([Order, User, Store, Product, OrderItem]),
+    TypeOrmModule.forFeature([Order, User, Store, Product, OrderItem, OrderStatusHistory]),
     forwardRef(() => OrderItemsModule),
   ],
   controllers: [OrderController],

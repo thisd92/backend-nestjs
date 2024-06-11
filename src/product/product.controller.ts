@@ -16,6 +16,15 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { FileService } from 'src/file/file.service';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
+import { ProductResponseDto } from './dto/product-response.dto';
 
 @Controller('product')
 export class ProductController {
@@ -25,40 +34,57 @@ export class ProductController {
   ) {}
 
   @Post('register')
-  @UseInterceptors(FilesInterceptor('images', 6))
+  @UseInterceptors(FilesInterceptor('files', 6))
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Create a new product' })
+  @ApiResponse({
+    status: 201,
+    description: 'Product created successfully',
+    type: ProductResponseDto,
+  })
   async create(
-    @Body(new ValidationPipe()) createProductDto: CreateProductDto,
+    @Body()
+    createProductDto: CreateProductDto,
     @UploadedFiles() files: Express.Multer.File[],
-  ) {
-    if (files && files.length > 0) {
-      const imagesUrl = await Promise.all(
-        files.map((file) => this.fileService.saveFile(file)),
-      );
-      createProductDto.images = imagesUrl;
-    }
-    return this.productService.create(createProductDto);
+  ): Promise<ProductResponseDto> {
+    return this.productService.create(createProductDto, files);
   }
 
   @Get()
-  findAll() {
+  @ApiOperation({ summary: 'Get all products' })
+  @ApiOkResponse()
+  findAll(): Promise<ProductResponseDto[]> {
     return this.productService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  @ApiOperation({ summary: 'Get a product by ID' })
+  @ApiOkResponse()
+  @ApiResponse({ status: 404, description: 'Product not found' })
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<ProductResponseDto> {
     return this.productService.findOne(id);
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a product by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Product updated successfully',
+    type: ProductResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Product not found' })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
-  ) {
+  ): Promise<ProductResponseDto> {
     return this.productService.update(id, updateProductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  @ApiOperation({ summary: 'Delete a product by ID' })
+  @ApiResponse({ status: 200, description: 'Product deleted successfully' })
+  @ApiNotFoundResponse({ description: 'Product not found' })
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.productService.remove(id);
   }
 }

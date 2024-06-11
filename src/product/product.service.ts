@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Store } from 'src/store/entities/store.entity';
 import { ProductResponseDto } from './dto/product-response.dto';
 import { mapToProductResponse } from 'src/utils/product-mapper.util';
+import { FileService } from 'src/file/file.service';
 
 @Injectable()
 export class ProductService {
@@ -15,11 +16,13 @@ export class ProductService {
     private readonly productRepository: Repository<Product>,
     @InjectRepository(Store)
     private readonly storeRepository: Repository<Store>,
+
+    private readonly fileService: FileService,
   ) {}
 
   async create(
     createProductDto: CreateProductDto,
-    
+    files?: Express.Multer.File[],
   ): Promise<ProductResponseDto> {
     const store = await this.storeRepository.findOne({
       where: { id: createProductDto.storeId },
@@ -27,7 +30,17 @@ export class ProductService {
     if (!store) {
       throw new Error('Store not found');
     }
-    
+
+    if (files && files.length > 0) {
+      createProductDto.images = [];
+      await Promise.all(
+        files.map(async (file) => {
+          const path = await this.fileService.saveFile(file);
+          createProductDto.images.push(path);
+        }),
+      );
+    }
+
     const product = this.productRepository.create({
       ...createProductDto,
       store,
@@ -55,7 +68,7 @@ export class ProductService {
     return mapToProductResponse(product);
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {
+  async update(id: number, updateProductDto: UpdateProductDto): Promise<ProductResponseDto> {
     await this.productRepository.update(id, updateProductDto);
     const updatedStore = await this.productRepository.findOne({
       where: { id: id },
@@ -63,7 +76,7 @@ export class ProductService {
     return updatedStore;
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     const result = await this.productRepository.delete(id);
     if (result.affected === 0) {
       throw new NotFoundException('Product not found');

@@ -10,6 +10,7 @@ import {
 import { UserAddress } from './user-address.entity';
 import { ProductReview } from 'src/product/entities/product-review.entity';
 import { PaymentMethod } from 'src/payment-methods/entities/payment-method.entity';
+import { UserRole } from './user-role';
 
 @Entity('users')
 export class User {
@@ -49,8 +50,8 @@ export class User {
   @Column({ default: false })
   admin?: boolean;
 
-  @Column({ type: 'simple-array', nullable: true })
-  roles: string[];
+  @Column({ default: 'User' , type: 'simple-array', nullable: true })
+  roles: UserRole;
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];

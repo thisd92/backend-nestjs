@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
   IsBoolean,
@@ -9,39 +10,55 @@ import {
 } from 'class-validator';
 
 export class CreateProductDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty()
   @IsString()
-  @IsOptional()
   description?: string;
 
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   price: number;
 
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   stock: number;
 
+  @ApiPropertyOptional()
   @IsArray()
   @IsOptional()
   images: string[];
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   category: string;
 
+  @ApiPropertyOptional()
   @IsObject()
   @IsOptional()
   attributes?: Record<string, any>;
 
+  @ApiPropertyOptional()
   @IsBoolean()
   @IsOptional()
   isSellable?: boolean;
 
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   storeId: number;
+
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: false,
+    isArray: true,
+  })
+  files?: any;
 }

@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as argon2 from 'argon2';
+import { hashPass } from 'src/utils/hashPass.util';
 
 @Injectable()
 export class UserService {
@@ -51,6 +52,8 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const { password } = updateUserDto;
+    if (password) updateUserDto.password = await hashPass(password);
     await this.userRepository.update(id, updateUserDto);
     const updatedUser = await this.userRepository.findOne({
       where: { id: id },

@@ -14,7 +14,7 @@ export class CreateUserDto {
   @IsStrongPassword({
     minLength: 6,
   })
-  readonly password: string;
+  password: string;
 
   @ApiPropertyOptional({ enum: ['Admin', 'User'] })
   @IsString()

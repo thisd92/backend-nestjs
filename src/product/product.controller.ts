@@ -7,9 +7,10 @@ import {
   Param,
   Delete,
   ParseIntPipe,
-  ValidationPipe,
   UseInterceptors,
   UploadedFiles,
+  ParseFilePipe,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -26,12 +27,11 @@ import {
 } from '@nestjs/swagger';
 import { ProductResponseDto } from './dto/product-response.dto';
 
+const TYPE_IMAGE = 'image/png' || 'image/jpg';
+
 @Controller('product')
 export class ProductController {
-  constructor(
-    private readonly productService: ProductService,
-    private readonly fileService: FileService,
-  ) {}
+  constructor(private readonly productService: ProductService) {}
 
   @Post('register')
   @UseInterceptors(FilesInterceptor('files', 6))
@@ -45,7 +45,12 @@ export class ProductController {
   async create(
     @Body()
     createProductDto: CreateProductDto,
-    @UploadedFiles() files: Express.Multer.File[],
+    @UploadedFiles(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: TYPE_IMAGE })],
+      }),
+    )
+    files: Express.Multer.File[],
   ): Promise<ProductResponseDto> {
     return this.productService.create(createProductDto, files);
   }

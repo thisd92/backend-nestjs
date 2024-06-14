@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from 'src/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { StoreModule } from './store/store.module';
@@ -15,11 +15,11 @@ import { PaymentMethodsModule } from './payment-methods/payment-methods.module';
 
 @Module({
   imports: [
+    DatabaseModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MulterModule.register({
       dest: './uploads',
     }),
-    DatabaseModule,
     UserModule,
     AuthModule,
     StoreModule,
@@ -31,7 +31,4 @@ import { PaymentMethodsModule } from './payment-methods/payment-methods.module';
   controllers: [AppController],
   providers: [AppService, FileService],
 })
-export class AppModule {
-  constructor() {
-  }
-}
+export class AppModule {}

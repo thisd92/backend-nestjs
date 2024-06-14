@@ -4,7 +4,7 @@ import { OrderController } from './order.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderItemsModule } from 'src/order-items/order-items.module';
 import { Order } from './entities/order.entity';
-import { DatabaseModule } from 'src/database.module';
+import { DatabaseModule } from 'src/database/database.module';
 import { Product } from 'src/product/entities/product.entity';
 import { Store } from 'src/store/entities/store.entity';
 import { User } from 'src/user/entities/user.entity';

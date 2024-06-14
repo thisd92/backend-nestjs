@@ -14,7 +14,7 @@ import {
 import { AuthForgetDto } from './dto/auth-forget.dto';
 import { StoreAuthService } from './store-auth.service';
 import { AuthResetDto } from './dto/auth-reset.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { AuthLoginDto } from './dto/auth-login.dto';
 
 @Controller('auth/store')

@@ -12,10 +12,13 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { AuthResetDto } from './dto/auth-reset.dto';
 import { AuthForgetDto } from './dto/auth-forget.dto';
 import { AuthLoginDto } from './dto/auth-login.dto';
+import { RoleGuard } from 'src/guards/role.guard';
+import { Roles } from 'src/decorator/roles.decorator';
+import { UserRole } from 'src/user/entities/user-role';
 
 @Controller('auth/user')
 export class UserAuthController {
@@ -33,12 +36,16 @@ export class UserAuthController {
     return result;
   }
 
+  @Roles(UserRole.User)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post('forget-password')
   @ApiOperation({ summary: 'Password Forget' })
   async userForget(@Body() { email }: AuthForgetDto) {
     return this.authUserService.forgetUser(email);
   }
 
+  @Roles(UserRole.User)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post('reset-password')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Reset User Password' })

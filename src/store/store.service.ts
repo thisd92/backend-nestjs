@@ -5,6 +5,7 @@ import { Store } from './entities/store.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
+import { hashPass } from 'src/utils/hashPass.util';
 
 @Injectable()
 export class StoreService {
@@ -50,7 +51,9 @@ export class StoreService {
     return store;
   }
 
-  async update(id: number, updateStoreDto: UpdateStoreDto) {
+  async update(id: number, updateStoreDto: UpdateStoreDto): Promise<Store> {
+    const { password } = updateStoreDto;
+    if (password) updateStoreDto.password = await hashPass(password);
     await this.storeRepository.update(id, updateStoreDto);
     const updatedStore = await this.storeRepository.findOne({
       where: { id: id },

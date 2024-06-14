@@ -1,10 +1,22 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString, IsStrongPassword } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator';
+import { UserRole } from '../entities/user-role';
 
 export class CreateUserDto {
   @ApiProperty()
   @IsString()
   readonly name: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  readonly cpf: string;
 
   @ApiProperty()
   @IsEmail()
@@ -14,10 +26,10 @@ export class CreateUserDto {
   @IsStrongPassword({
     minLength: 6,
   })
-  readonly password: string;
+  password: string;
 
-  @ApiPropertyOptional({ enum: ['Admin', 'User'] })
-  @IsString()
+  @ApiPropertyOptional({ enum: ['Admin', 'StoreOwner', 'User', 'Guest'] })
   @IsOptional()
-  readonly role?: string;
+  @IsEnum(UserRole)
+  readonly role?: UserRole;
 }

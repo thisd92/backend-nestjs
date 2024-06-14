@@ -7,13 +7,25 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { User } from './entities/user.entity';
+import { Roles } from 'src/decorator/roles.decorator';
+import { UserRole } from './entities/user-role';
+import { RoleGuard } from 'src/guards/role.guard';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
+@Roles(UserRole.Admin, UserRole.User)
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -45,10 +57,8 @@ export class UserController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update an user by ID' })
-  @ApiResponse({
-    status: 200,
+  @ApiOkResponse({
     description: 'User updated successfully',
-    type: User,
   })
   @ApiResponse({ status: 404, description: 'User not found' })
   update(

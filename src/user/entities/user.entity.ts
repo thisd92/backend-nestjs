@@ -20,7 +20,7 @@ export class User {
   @Column()
   name: string;
 
-  @Column({ default: '', unique: true })
+  @Column({ unique: true, nullable: true })
   cpf: string;
 
   @Column({ unique: true })
@@ -47,11 +47,8 @@ export class User {
   @Column({ default: true })
   isActive?: boolean;
 
-  @Column({ default: false })
-  admin?: boolean;
-
-  @Column({ default: 'User' , type: 'simple-array', nullable: true })
-  roles: UserRole;
+  @Column({ default: UserRole.User, type: 'enum', enum: UserRole })
+  role: UserRole;
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];

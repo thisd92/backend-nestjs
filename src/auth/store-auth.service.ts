@@ -3,12 +3,14 @@ import { StoreService } from 'src/store/store.service';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { AuthService } from './auth.service';
 import { UpdateStoreDto } from 'src/store/dto/update-store.dto';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class StoreAuthService {
   constructor(
     private readonly authService: AuthService,
     private readonly storeService: StoreService,
+    private readonly mailerService: MailerService,
   ) {}
 
   async storeAuth({
@@ -31,6 +33,8 @@ export class StoreAuthService {
       id: store.id,
       name: store.name,
       email: store.email,
+      issuer: 'auth',
+      audience: 'stores',
     };
 
     const accessToken = await this.authService.generateToken(payload);
@@ -44,9 +48,27 @@ export class StoreAuthService {
       throw new UnauthorizedException('Invalid email');
     }
 
-    // TODO: Enviar email
+    const payload = {
+      id: store.id,
+      name: store.name,
+      email: store.email,
+      issuer: 'forget',
+      audience: 'stores',
+    };
 
-    return true;
+    const accessToken = await this.authService.generateToken(payload);
+
+    await this.mailerService.sendMail({
+      subject: 'Recuperação de senha',
+      to: email,
+      template: 'forget',
+      context: {
+        name: store.name,
+        url: `http://localhost:3000/${accessToken}`,
+      },
+    });
+
+    return { success: true };
   }
 
   async resetStorePass(password: string, payload) {
@@ -54,7 +76,6 @@ export class StoreAuthService {
     const { email } = payload;
     const updateStoreDto: UpdateStoreDto = { password };
     await this.storeService.update(id, updateStoreDto);
-
     return this.storeAuth({ email, password });
   }
 }

@@ -12,6 +12,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { OrderModule } from './order/order.module';
 import { OrderItemsModule } from './order-items/order-items.module';
 import { PaymentMethodsModule } from './payment-methods/payment-methods.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PaymentMethodsModule } from './payment-methods/payment-methods.module';
     MulterModule.register({
       dest: './uploads',
     }),
+    MailModule,
     UserModule,
     AuthModule,
     StoreModule,

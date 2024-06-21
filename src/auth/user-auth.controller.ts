@@ -36,8 +36,6 @@ export class UserAuthController {
     return result;
   }
 
-  @Roles(UserRole.User)
-  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post('forget-password')
   @ApiOperation({ summary: 'Password Forget' })
   async userForget(@Body() { email }: AuthForgetDto) {

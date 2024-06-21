@@ -9,11 +9,13 @@ import { StoreAuthService } from './store-auth.service';
 import { UserAuthService } from './user-auth.service';
 import { StoreAuthController } from './store-auth.controller';
 import { UserAuthController } from './user-auth.controller';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
     UserModule,
     StoreModule,
+    MailModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       global: true,

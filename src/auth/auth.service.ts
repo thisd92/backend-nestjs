@@ -9,6 +9,8 @@ export class AuthService {
   async generateToken(payload) {
     return await this.jwtService.signAsync(payload, {
       subject: String(payload.id),
+      issuer: payload.issuer,
+      audience: payload.audience,
     });
   }
 

@@ -4,10 +4,10 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
-import { Store } from 'src/store/entities/store.entity';
+import { Store } from '../store/entities/store.entity';
 import { ProductResponseDto } from './dto/product-response.dto';
-import { mapToProductResponse } from 'src/utils/product-mapper.util';
-import { FileService } from 'src/file/file.service';
+import { mapToProductResponse } from '../utils/product-mapper.util';
+import { FileService } from '../file/file.service';
 
 @Injectable()
 export class ProductService {

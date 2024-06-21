@@ -1,12 +1,10 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
   Delete,
-  ValidationPipe,
   ParseIntPipe,
 } from '@nestjs/common';
 import { OrderItemsService } from './order-items.service';

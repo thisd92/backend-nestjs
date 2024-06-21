@@ -19,10 +19,10 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { Roles } from 'src/decorator/roles.decorator';
+import { Roles } from '../decorator/roles.decorator';
 import { UserRole } from './entities/user-role';
-import { RoleGuard } from 'src/guards/role.guard';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { RoleGuard } from '../guards/role.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Roles(UserRole.Admin, UserRole.User)
 @UseGuards(JwtAuthGuard, RoleGuard)

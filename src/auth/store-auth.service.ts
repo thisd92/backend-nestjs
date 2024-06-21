@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { StoreService } from 'src/store/store.service';
+import { StoreService } from '../store/store.service';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { AuthService } from './auth.service';
-import { UpdateStoreDto } from 'src/store/dto/update-store.dto';
+import { UpdateStoreDto } from '../store/dto/update-store.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()

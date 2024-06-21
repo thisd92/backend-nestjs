@@ -1,4 +1,4 @@
-import { Order } from 'src/order/entities/order.entity';
+import { Order } from '../../order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,8 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserAddress } from './user-address.entity';
-import { ProductReview } from 'src/product/entities/product-review.entity';
-import { PaymentMethod } from 'src/payment-methods/entities/payment-method.entity';
+import { ProductReview } from '../../product/entities/product-review.entity';
+import { PaymentMethod } from '../../payment-methods/entities/payment-method.entity';
 import { UserRole } from './user-role';
 
 @Entity('users')

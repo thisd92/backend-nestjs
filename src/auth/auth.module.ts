@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UserModule } from 'src/user/user.module';
+import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { StoreModule } from 'src/store/store.module';
+import { StoreModule } from '../store/store.module';
 import { StoreAuthService } from './store-auth.service';
 import { UserAuthService } from './user-auth.service';
 import { StoreAuthController } from './store-auth.controller';
 import { UserAuthController } from './user-auth.controller';
-import { MailModule } from 'src/mail/mail.module';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as argon2 from 'argon2';
-import { hashPass } from 'src/utils/hashPass.util';
+import { hashPass } from '../utils/hashPass.util';
 
 @Injectable()
 export class UserService {

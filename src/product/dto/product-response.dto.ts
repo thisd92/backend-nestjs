@@ -1,4 +1,4 @@
-import { StoreInfoDto } from 'src/store/dto/store-info.dto';
+import { StoreInfoDto } from '../../store/dto/store-info.dto';
 
 export class ProductResponseDto {
   id: number;

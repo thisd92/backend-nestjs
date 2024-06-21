@@ -16,9 +16,9 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { AuthResetDto } from './dto/auth-reset.dto';
 import { AuthForgetDto } from './dto/auth-forget.dto';
 import { AuthLoginDto } from './dto/auth-login.dto';
-import { RoleGuard } from 'src/guards/role.guard';
-import { Roles } from 'src/decorator/roles.decorator';
-import { UserRole } from 'src/user/entities/user-role';
+import { RoleGuard } from '../guards/role.guard';
+import { Roles } from '../decorator/roles.decorator';
+import { UserRole } from '../user/entities/user-role';
 
 @Controller('auth/user')
 export class UserAuthController {

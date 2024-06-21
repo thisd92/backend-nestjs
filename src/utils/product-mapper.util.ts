@@ -1,6 +1,6 @@
-import { ProductResponseDto } from 'src/product/dto/product-response.dto';
-import { Product } from 'src/product/entities/product.entity';
-import { StoreInfoDto } from 'src/store/dto/store-info.dto';
+import { ProductResponseDto } from '../product/dto/product-response.dto';
+import { Product } from '../product/entities/product.entity';
+import { StoreInfoDto } from '../store/dto/store-info.dto';
 
 export function mapToProductResponse(product: Product): ProductResponseDto {
   const storeInfo: StoreInfoDto = {

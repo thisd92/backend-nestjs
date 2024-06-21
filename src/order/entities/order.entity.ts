@@ -1,6 +1,6 @@
-import { OrderItem } from 'src/order-items/entities/order-item.entity';
-import { Store } from 'src/store/entities/store.entity';
-import { User } from 'src/user/entities/user.entity';
+import { OrderItem } from '../../order-items/entities/order-item.entity';
+import { Store } from '../../store/entities/store.entity';
+import { User } from '../../user/entities/user.entity';
 import {
   Column,
   Entity,
@@ -9,8 +9,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { OrderStatusHistory } from './order-status.entity';
-import { UserAddress } from 'src/user/entities/user-address.entity';
-import { PaymentMethod } from 'src/payment-methods/entities/payment-method.entity';
+import { UserAddress } from '../../user/entities/user-address.entity';
+import { PaymentMethod } from '../../payment-methods/entities/payment-method.entity';
 
 @Entity('orders')
 export class Order {

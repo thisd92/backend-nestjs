@@ -5,7 +5,7 @@ import { Store } from './entities/store.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
-import { hashPass } from 'src/utils/hashPass.util';
+import { hashPass } from '../utils/hashPass.util';
 
 @Injectable()
 export class StoreService {

@@ -5,7 +5,6 @@ import {
   Body,
   Param,
   Delete,
-  ValidationPipe,
   ParseIntPipe,
 } from '@nestjs/common';
 import { PaymentMethodsService } from './payment-methods.service';

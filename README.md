@@ -2,37 +2,49 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Backend NestJS Marketplace
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Visão Geral
+Este repositório contém a implementação do backend para um marketplace utilizando NestJS. O projeto está em andamento e visa fornecer uma solução robusta e escalável para o gerenciamento de um marketplace.
 
-## Description
+## Funcionalidades Implementadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Autenticação JWT**: A aplicação retorna um token JWT, que é usado para autenticar e autorizar usuários nas rotas protegidas.
+- **Controle de Acesso Baseado em Funções (RoleGuard)**: Implementado um guard para verificar o papel (Role) do usuário e garantir que ele tenha permissão para realizar determinadas ações.
+- **Upload de Imagens**: Configurado o Multer para adicionar imagens aos produtos.
+- **Envio de Email**: Configurado o Nodemailer para enviar emails, incluindo a funcionalidade de recuperação de senha através da rota de forget.
+- **Decorators Personalizados**: Criados decorators para Role e User.
+- **Testes**: Realizados testes iniciais para verificar se os controllers e services estão definidos corretamente.
 
-## Installation
+## Instalação
 
-```bash
-$ npm install
+1. **Clone o repositório:**
+   ```bash
+   $ git clone https://github.com/seu-usuario/backend-nestjs.git
+   ```
+2. **Navegue até o diretório do projeto:**
+   ```bash
+   $ cd backend-nestjs
+   ```
+3. **Instale as dependências:**
+    ```bash
+    $ npm install
+    ```
+
+## Configure as variáveis de ambiente:
+Crie um arquivo `.env` na raiz do projeto e adicione suas variáveis de ambiente.
+
+```env
+DB_URL=sua_url_do_banco_de_dados
+JWT_SECRET=seu_segredo_jwt
+DB_HOST=seu_host_smtp
+DB_PORT=sua_porta_smtp
+DB_NAME=nome_do_banco_de_dados
+DB_USERNAME=seu_usuario_smtp
+DB_PASSWORD=sua_senha_smtp
 ```
 
-## Running the app
+## Executando a aplicação
 
 ```bash
 # development
@@ -45,7 +57,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Testes
 
 ```bash
 # unit tests
@@ -58,16 +70,15 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Documentação da API
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Acesse a documentação da API gerada pelo Swagger em http://localhost:3000/swagger/docs.
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Contribuição
 
-## License
+Contribuições são bem-vindas! Por favor, siga as diretrizes no arquivo CONTRIBUTING.md.
 
-Nest is [MIT licensed](LICENSE).
+## Licença
+
+Licença MIT.
